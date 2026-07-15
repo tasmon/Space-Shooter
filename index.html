@@ -11,7 +11,6 @@
     <h1>🚀 Space Shooter</h1>
     <button onclick="startGame()">🎮 Play</button>
     <button onclick="openPage('highscore')">⭐ High Score</button>
-    <button onclick="openPage('settings')">⚙️ Settings</button>
     <button onclick="openPage('help')">❓ Help</button>
     <button onclick="openPage('about')">ℹ️ About</button>
   </div>
@@ -30,18 +29,6 @@
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
-  <div id="settings" class="page">
-    <h2>⚙️ Settings</h2>
-    <label>Difficulty:
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </label><br>
-    <button onclick="backToMenu()">⬅ Back</button>
-  </div>
-
   <div id="help" class="page">
     <h2>❓ Help</h2>
     <p>Controls:</p>
@@ -50,17 +37,16 @@
       <li>8 = Down</li>
       <li>4 = Left</li>
       <li>6 = Right</li>
-      <li>5 = Fire</li>
       <li>0 = Pause</li>
     </ul>
-    <p>Collect power‑ups for shields and double fire!</p>
+    <p>Auto‑shoot enabled — just move and dodge!</p>
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
   <div id="about" class="page">
     <h2>ℹ️ About</h2>
     <p>Space Shooter Game</p>
-    <p>Version 2.0.04</p>
+    <p>Version 3.0.5</p>
     <p>Developer: Tasmon Islam</p>
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
