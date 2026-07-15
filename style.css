@@ -41,10 +41,6 @@ button {
   text-align: left;
 }
 
-button:hover {
-  background: linear-gradient(180deg, #00bfff, #0077cc);
-}
-
 canvas {
   background: #000;
   display: none;
