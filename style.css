@@ -5,15 +5,21 @@ html, body {
   height: 320px;
   overflow: hidden;
   background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-h1, h2, p {
-  margin: 8px 0;
+h1, h2 {
+  margin: 10px 0;
   color: #fff;
-  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+p {
+  margin: 6px 12px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left; /* keep text left aligned */
 }
 
 #menu, .page {
@@ -22,21 +28,18 @@ h1, h2, p {
   height: 320px;
   background: #000;
   color: #fff;
-  text-align: center;
 }
 
 #menu.active, .page.active {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 
 button {
+  display: block;
   width: 200px;
-  margin: 6px;
+  margin: 8px auto; /* center buttons only */
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #fff;
   background: linear-gradient(180deg, #1e90ff, #0066cc);
