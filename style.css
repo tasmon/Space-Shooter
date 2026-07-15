@@ -5,48 +5,58 @@ html, body {
   height: 320px;
   overflow: hidden;
   background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-h1, h2 {
-  font-size: 20px;
-  margin: 10px 0;
+h1, h2, p {
+  margin: 8px 0;
   color: #fff;
+  text-align: center;
 }
 
 #menu, .page {
   display: none;
   width: 240px;
   height: 320px;
-  margin: auto;
-  padding-top: 20px;
+  background: #000;
+  color: #fff;
+  text-align: center;
 }
 
 #menu.active, .page.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
-  display: block;
   width: 200px;
-  margin: 10px auto;
-  padding: 12px;
+  margin: 6px;
+  padding: 10px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
   background: linear-gradient(180deg, #1e90ff, #0066cc);
   border: none;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
-  text-align: left;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+button:hover {
+  background: linear-gradient(180deg, #00bfff, #0077cc);
 }
 
 canvas {
   background: #000;
-  display: none;
-  margin: auto;
-  border: 2px solid #fff;
   width: 240px;
   height: 320px;
+  display: none;
+  margin: 0;
+  padding: 0;
 }
 
 #pauseMenu {
@@ -56,9 +66,9 @@ canvas {
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0,0,0,0.9);
-  padding: 15px;
-  border: 2px solid #fff;
+  padding: 12px;
   border-radius: 10px;
   width: 200px;
   color: #fff;
+  text-align: center;
 }
