@@ -4,6 +4,9 @@ const pauseMenu = document.getElementById("pauseMenu");
 
 canvas.width = 240;
 canvas.height = 320;
+document.body.style.width = "240px";
+document.body.style.height = "320px";
+document.body.style.overflow = "hidden";
 
 let player, bullets, enemies, powerUps, lives, score, level;
 let highScore = 0;
@@ -11,6 +14,7 @@ let gameInterval, doubleFire = false, shield = false;
 let paused = false;
 let shootTimer = 0;
 let enemiesDestroyed = 0;
+let boss = null;
 
 function startGame() {
   document.getElementById("menu").classList.remove("active");
@@ -32,6 +36,7 @@ function resetGame() {
   paused = false;
   shootTimer = 0;
   enemiesDestroyed = 0;
+  boss = null;
   pauseMenu.style.display = "none";
 }
 
@@ -73,8 +78,45 @@ function updateGame() {
     if (b.y < 0) bullets.splice(i, 1);
   });
 
-  // Enemies spawn rate increases with level
-  if (Math.random() < 0.03 + level * 0.002) {
+  // Boss logic
+  if (level % 5 === 0 && !boss) {
+    boss = { x: 60, y: 20, width: 120, height: 40, hp: 50 + level * 5 };
+  }
+  if (boss) {
+    ctx.fillStyle = "purple";
+    ctx.fillRect(boss.x, boss.y, boss.width, boss.height);
+
+    // Boss movement (slow horizontal)
+    boss.x += Math.sin(Date.now() / 500) * 2;
+
+    // Bullet collision with boss
+    bullets.forEach((b, j) => {
+      if (b.x > boss.x && b.x < boss.x + boss.width &&
+          b.y > boss.y && b.y < boss.y + boss.height) {
+        bullets.splice(j, 1);
+        boss.hp--;
+        if (boss.hp <= 0) {
+          score += 200;
+          boss = null;
+          level++;
+        }
+      }
+    });
+
+    // Collision with player
+    if (boss.x < player.x + player.width && boss.x + boss.width > player.x &&
+        boss.y < player.y + player.height && boss.y + boss.height > player.y) {
+      if (shield) {
+        shield = false;
+      } else {
+        lives--;
+        if (lives <= 0) endGame();
+      }
+    }
+  }
+
+  // Regular enemies (only if not boss level)
+  if (!boss && Math.random() < 0.03 + level * 0.002) {
     enemies.push({ x: Math.random() * 200, y: 0, size: 15 + level });
   }
   ctx.fillStyle = "red";
@@ -142,6 +184,7 @@ function updateGame() {
   ctx.fillText("Lives: " + lives, 170, 20);
   ctx.fillText("High: " + highScore, 90, 20);
   ctx.fillText("Level: " + level, 10, 40);
+  if (boss) ctx.fillText("Boss HP: " + boss.hp, 120, 40);
 }
 
 function endGame() {
