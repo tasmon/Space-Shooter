@@ -2,11 +2,14 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const pauseMenu = document.getElementById("pauseMenu");
 
-let player, bullets, enemies, powerUps, lives, score, highScore = 0;
+let player, bullets, enemies, powerUps, lives, score;
+let highScore = 0;
 let gameInterval, difficulty = "easy", doubleFire = false, shield = false;
 let paused = false;
 
 function startGame() {
+  // read difficulty from settings
+  difficulty = document.getElementById("difficulty").value;
   document.getElementById("menu").classList.remove("active");
   canvas.style.display = "block";
   resetGame();
@@ -105,7 +108,10 @@ function updateGame() {
 
 function endGame() {
   clearInterval(gameInterval);
-  if (score > highScore) highScore = score;
+  if (score > highScore) {
+    highScore = score;
+    document.getElementById("highscoreValue").innerText = highScore;
+  }
   alert("Game Over! Score: " + score);
   backToMenu();
 }
