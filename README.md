@@ -5,9 +5,7 @@ Features include:
 - **T9 Keypad Controls**: 2 = Up, 8 = Down, 4 = Left, 6 = Right, 5 = Fire, 0 = Pause.  
 - **Gameplay**: Smooth scrolling, enemy waves, score tracking, and lives system.  
 - **Settings Page**: Difficulty levels (Easy, Medium, Hard) and sound toggle.  
-- **Help Page**: Quick guide to controls.  
-- **About Page**: Game info, version, and developer credit.  
-- **Developer Info**: Tasmon Islam.  
+- **Help Page**: Quick guide to controls.
 
 ---
 
