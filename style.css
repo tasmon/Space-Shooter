@@ -1,0 +1,39 @@
+body {
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+
+#menu, .page {
+  display: none;
+}
+
+#menu.active, .page.active {
+  display: block;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+canvas {
+  background: #000;
+  display: none;
+  margin: auto;
+  border: 2px solid white;
+}
+
+#pauseMenu {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  padding: 10px;
+  border: 2px solid white;
+}
