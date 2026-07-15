@@ -5,21 +5,31 @@ html, body {
   height: 320px;
   overflow: hidden;
   background: #000;
+  font-family: Arial, sans-serif;
 }
 
-h1, h2 {
+h1 {
+  margin: 12px 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center; /* center only titles */
+}
+
+h2 {
   margin: 10px 0;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
+  text-align: center;
 }
 
 p {
   margin: 6px 12px;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.4;
-  text-align: left; /* keep text left aligned */
+  text-align: left; /* keep paragraphs readable */
 }
 
 #menu, .page {
@@ -31,7 +41,10 @@ p {
 }
 
 #menu.active, .page.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 button {
@@ -39,7 +52,7 @@ button {
   width: 200px;
   margin: 8px auto; /* center buttons only */
   padding: 10px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: #fff;
   background: linear-gradient(180deg, #1e90ff, #0066cc);
