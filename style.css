@@ -1,13 +1,22 @@
 body {
-  background: black;
-  color: white;
+  background: #000;
+  color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
 }
 
+h1, h2 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
 #menu, .page {
   display: none;
+  width: 240px;
+  height: 320px;
+  margin: auto;
+  padding-top: 30px;
 }
 
 #menu.active, .page.active {
@@ -15,16 +24,28 @@ body {
 }
 
 button {
-  margin: 5px;
-  padding: 5px 10px;
-  font-size: 14px;
+  display: block;
+  width: 180px;
+  margin: 8px auto;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(180deg, #1e90ff, #0066cc);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+button:hover {
+  background: linear-gradient(180deg, #00bfff, #0077cc);
 }
 
 canvas {
   background: #000;
   display: none;
   margin: auto;
-  border: 2px solid white;
+  border: 2px solid #fff;
 }
 
 #pauseMenu {
@@ -33,7 +54,14 @@ canvas {
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.8);
-  padding: 10px;
-  border: 2px solid white;
+  background: rgba(0,0,0,0.9);
+  padding: 15px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 200px;
+}
+
+#pauseMenu h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
 }
