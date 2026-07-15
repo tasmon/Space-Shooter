@@ -20,7 +20,7 @@ function startGame() {
 }
 
 function resetGame() {
-  player = { x: 100, y: 260, width: 40, height: 40 }; // bigger ship
+  player = { x: 100, y: 260, width: 40, height: 40 }; // larger ship
   bullets = [];
   enemies = [];
   powerUps = [];
@@ -37,18 +37,18 @@ function updateGame() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Background starfield
+  // Background stars
   ctx.fillStyle = "white";
-  for (let i = 0; i < 20; i++) {
-    ctx.fillRect(Math.random() * 240, Math.random() * 320, 1, 1);
+  for (let i = 0; i < 12; i++) {
+    ctx.fillRect(Math.random() * 240, Math.random() * 320, 2, 2);
   }
 
-  // Player spaceship (modern triangle)
+  // Player spaceship
   ctx.fillStyle = shield ? "lime" : "cyan";
   ctx.beginPath();
-  ctx.moveTo(player.x + player.width / 2, player.y); // tip
-  ctx.lineTo(player.x, player.y + player.height);    // left
-  ctx.lineTo(player.x + player.width, player.y + player.height); // right
+  ctx.moveTo(player.x + player.width / 2, player.y);
+  ctx.lineTo(player.x, player.y + player.height);
+  ctx.lineTo(player.x + player.width, player.y + player.height);
   ctx.closePath();
   ctx.fill();
 
@@ -56,13 +56,13 @@ function updateGame() {
   ctx.fillStyle = "yellow";
   bullets.forEach((b, i) => {
     b.y -= 6;
-    ctx.fillRect(b.x, b.y, 4, 12);
+    ctx.fillRect(b.x, b.y, 5, 15);
     if (b.y < 0) bullets.splice(i, 1);
   });
 
-  // Enemies (larger asteroids)
+  // Enemies
   if (Math.random() < 0.05) {
-    enemies.push({ x: Math.random() * 200, y: 0, size: 20 });
+    enemies.push({ x: Math.random() * 200, y: 0, size: 25 });
   }
   ctx.fillStyle = "red";
   enemies.forEach((e, i) => {
@@ -71,7 +71,7 @@ function updateGame() {
     ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
     ctx.fill();
 
-    // Collision with bullets
+    // Bullet collision
     bullets.forEach((b, j) => {
       if (b.x < e.x + e.size && b.x > e.x - e.size &&
           b.y < e.y + e.size && b.y > e.y - e.size) {
@@ -81,7 +81,7 @@ function updateGame() {
       }
     });
 
-    // Collision with player
+    // Player collision
     if (e.x < player.x + player.width && e.x > player.x &&
         e.y + e.size > player.y && e.y < player.y + player.height) {
       enemies.splice(i, 1);
@@ -119,10 +119,10 @@ function updateGame() {
 
   // HUD
   ctx.fillStyle = "white";
-  ctx.font = "12px Arial";
-  ctx.fillText("Score: " + score, 10, 15);
-  ctx.fillText("Lives: " + lives, 180, 15);
-  ctx.fillText("High: " + highScore, 100, 15);
+  ctx.font = "bold 14px Arial";
+  ctx.fillText("Score: " + score, 10, 20);
+  ctx.fillText("Lives: " + lives, 170, 20);
+  ctx.fillText("High: " + highScore, 90, 20);
 }
 
 function endGame() {
