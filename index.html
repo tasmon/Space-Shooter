@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Main Menu -->
   <div id="menu" class="active">
     <h1>🚀 Space Shooter</h1>
     <button onclick="startGame()">🎮 Play</button>
@@ -15,35 +16,39 @@
     <button onclick="openPage('about')">ℹ️ About</button>
   </div>
 
+  <!-- Game Canvas -->
   <canvas id="gameCanvas" width="240" height="320"></canvas>
 
+  <!-- Pause Menu -->
   <div id="pauseMenu">
     <h2>⏸ Paused</h2>
     <button onclick="resumeGame()">▶ Resume</button>
     <button onclick="quitGame()">❌ Quit</button>
   </div>
 
+  <!-- High Score Page -->
   <div id="highscore" class="page">
     <h2>⭐ High Score</h2>
     <p id="highscoreValue">0</p>
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
+  <!-- Help Page -->
   <div id="help" class="page">
     <h2>❓ Help</h2>
-    <p>Controls:</p>
-    <ul>
-      <p>2 = Up, 8 = Down<, 4 = Left</li>
-      6 = Right, 0 = Pause</p>
-    </ul>
-    <p>Auto‑shoot enabled, just move and dodge!</p>
+    <p>
+      Controls: 2 = Up, 8 = Down, 4 = Left, 6 = Right,  
+      5 = Pause/Play, 0 = Pause Menu, 1 = Home Menu.  
+      Auto‑shoot enabled - just move and dodge!
+    </p>
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
+  <!-- About Page -->
   <div id="about" class="page">
     <h2>ℹ️ About</h2>
-    <p>Space Shooter</p>
-    <p>Version 2.0.8</p>
+    <p>Space Shooter Game</p>
+    <p>Version 2.0.10</p>
     <p>Developer: Tasmon Islam</p>
     <button onclick="backToMenu()">⬅ Back</button>
   </div>
