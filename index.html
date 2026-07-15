@@ -3,103 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Space Shooter</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div id="menu" class="active">
-  <h1>🚀 Space Shooter</h1>
-  <button onclick="startGame()">Play</button>
-  <button onclick="openPage('highscore')">High Score</button>
-  <button onclick="openPage('settings')">Settings</button>
-  <button onclick="openPage('help')">Help</button>
-  <button onclick="openPage('about')">About</button>
-</div>
-
-
-  <canvas id="gameCanvas" width="240" height="320"></canvas>
-
-  <div id="pauseMenu">
-    <h2>Paused</h2>
-    <button onclick="resumeGame()">Resume</button>
-    <button onclick="quitGame()">Quit</button>
-  </div>
-
-  <div id="highscore" class="page">
-    <h2>High Score</h2>
-    <p id="highscoreValue">0</p>
-    <button onclick="backToMenu()">Back</button>
-  </div>
-
-  <div id="settings" class="page">
-    <h2>Settings</h2>
-    <label>Difficulty:
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </label><br>
-    <label>Sound:
-      <select id="sound">
-        <option value="on">On</option>
-        <option value="off">Off</option>
-      </select>
-    </label><br>
-    <button onclick="backToMenu()">Back</button>
-  </div>
-
-  <div id="help" class="page">
-    <h2>Help</h2>
-    <p>Controls:</p>
-    <ul>
-      <li>2 = Up</li>
-      <li>8 = Down</li>
-      <li>4 = Left</li>
-      <li>6 = Right</li>
-      <li>5 = Fire</li>
-      <li>0 = Pause</li>
-    </ul>
-    <p>Collect power‑ups for shields and double fire!</p>
-    <button onclick="backToMenu()">Back</button>
-  </div>
-
-  <div id="about" class="page">
-    <h2>About</h2>
-    <p>Space Shooter Game</p>
-    <p>Version 3.0</p>
-    <p>Developer: Tasmon Islam</p>
-    <button onclick="backToMenu()">Back</button>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Space Shooter</title>
+  <meta name="viewport" content="width=240, height=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="menu" class="active">
     <h1>🚀 Space Shooter</h1>
-    <button onclick="startGame()">Play</button>
-    <button onclick="openPage('settings')">Settings</button>
-    <button onclick="openPage('help')">Help</button>
-    <button onclick="openPage('about')">About</button>
+    <button onclick="startGame()">🎮 Play</button>
+    <button onclick="openPage('highscore')">⭐ High Score</button>
+    <button onclick="openPage('settings')">⚙️ Settings</button>
+    <button onclick="openPage('help')">❓ Help</button>
+    <button onclick="openPage('about')">ℹ️ About</button>
   </div>
 
-  <canvas id="gameCanvas" width="240" height="320"></canvas>
+  <canvas id="gameCanvas"></canvas>
 
   <div id="pauseMenu">
-    <h2>Paused</h2>
-    <button onclick="resumeGame()">Resume</button>
-    <button onclick="quitGame()">Quit</button>
+    <h2>⏸ Paused</h2>
+    <button onclick="resumeGame()">▶ Resume</button>
+    <button onclick="quitGame()">❌ Quit</button>
+  </div>
+
+  <div id="highscore" class="page">
+    <h2>⭐ High Score</h2>
+    <p id="highscoreValue">0</p>
+    <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
   <div id="settings" class="page">
-    <h2>Settings</h2>
+    <h2>⚙️ Settings</h2>
     <label>Difficulty:
       <select id="difficulty">
         <option value="easy">Easy</option>
@@ -107,17 +39,11 @@
         <option value="hard">Hard</option>
       </select>
     </label><br>
-    <label>Sound:
-      <select id="sound">
-        <option value="on">On</option>
-        <option value="off">Off</option>
-      </select>
-    </label><br>
-    <button onclick="backToMenu()">Back</button>
+    <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
   <div id="help" class="page">
-    <h2>Help</h2>
+    <h2>❓ Help</h2>
     <p>Controls:</p>
     <ul>
       <li>2 = Up</li>
@@ -128,15 +54,15 @@
       <li>0 = Pause</li>
     </ul>
     <p>Collect power‑ups for shields and double fire!</p>
-    <button onclick="backToMenu()">Back</button>
+    <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
   <div id="about" class="page">
-    <h2>About</h2>
+    <h2>ℹ️ About</h2>
     <p>Space Shooter Game</p>
-    <p>Version 2.1</p>
+    <p>Version 2.0.04</p>
     <p>Developer: Tasmon Islam</p>
-    <button onclick="backToMenu()">Back</button>
+    <button onclick="backToMenu()">⬅ Back</button>
   </div>
 
   <script src="script.js"></script>
