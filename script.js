@@ -2,13 +2,16 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const pauseMenu = document.getElementById("pauseMenu");
 
+// Force strict 240x320
+canvas.width = 240;
+canvas.height = 320;
+
 let player, bullets, enemies, powerUps, lives, score;
 let highScore = 0;
 let gameInterval, difficulty = "easy", doubleFire = false, shield = false;
 let paused = false;
 
 function startGame() {
-  // read difficulty from settings
   difficulty = document.getElementById("difficulty").value;
   document.getElementById("menu").classList.remove("active");
   canvas.style.display = "block";
@@ -34,31 +37,38 @@ function updateGame() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Player
+  // Draw player spaceship (triangle)
   ctx.fillStyle = shield ? "lime" : "cyan";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  ctx.beginPath();
+  ctx.moveTo(player.x + player.width / 2, player.y); // tip
+  ctx.lineTo(player.x, player.y + player.height);    // left
+  ctx.lineTo(player.x + player.width, player.y + player.height); // right
+  ctx.closePath();
+  ctx.fill();
 
   // Bullets
   ctx.fillStyle = "yellow";
   bullets.forEach((b, i) => {
     b.y -= 5;
-    ctx.fillRect(b.x, b.y, 4, 10);
+    ctx.fillRect(b.x, b.y, 3, 8);
     if (b.y < 0) bullets.splice(i, 1);
   });
 
-  // Enemies
+  // Enemies (asteroids)
   if (Math.random() < 0.05) {
-    enemies.push({ x: Math.random() * 220, y: 0, width: 20, height: 20 });
+    enemies.push({ x: Math.random() * 220, y: 0, size: 15 });
   }
   ctx.fillStyle = "red";
   enemies.forEach((e, i) => {
     e.y += (difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3);
-    ctx.fillRect(e.x, e.y, e.width, e.height);
+    ctx.beginPath();
+    ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+    ctx.fill();
 
     // Collision with bullets
     bullets.forEach((b, j) => {
-      if (b.x < e.x + e.width && b.x + 4 > e.x &&
-          b.y < e.y + e.height && b.y + 10 > e.y) {
+      if (b.x < e.x + e.size && b.x > e.x - e.size &&
+          b.y < e.y + e.size && b.y > e.y - e.size) {
         enemies.splice(i, 1);
         bullets.splice(j, 1);
         score += 10;
@@ -66,8 +76,8 @@ function updateGame() {
     });
 
     // Collision with player
-    if (e.x < player.x + player.width && e.x + e.width > player.x &&
-        e.y < player.y + player.height && e.y + e.height > player.y) {
+    if (e.x < player.x + player.width && e.x > player.x &&
+        e.y + e.size > player.y && e.y < player.y + player.height) {
       enemies.splice(i, 1);
       if (shield) {
         shield = false;
@@ -83,15 +93,17 @@ function updateGame() {
   // PowerUps
   if (Math.random() < 0.01) {
     let type = Math.random() < 0.5 ? "shield" : "double";
-    powerUps.push({ x: Math.random() * 220, y: 0, width: 15, height: 15, type });
+    powerUps.push({ x: Math.random() * 220, y: 0, size: 10, type });
   }
   ctx.fillStyle = "green";
   powerUps.forEach((p, i) => {
     p.y += 2;
-    ctx.fillRect(p.x, p.y, p.width, p.height);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
 
-    if (p.x < player.x + player.width && p.x + p.width > player.x &&
-        p.y < player.y + player.height && p.y + p.height > player.y) {
+    if (p.x < player.x + player.width && p.x > player.x &&
+        p.y > player.y && p.y < player.y + player.height) {
       if (p.type === "shield") shield = true;
       if (p.type === "double") doubleFire = true;
       powerUps.splice(i, 1);
@@ -146,8 +158,11 @@ document.addEventListener("keydown", e => {
     case "4": player.x = Math.max(0, player.x - 10); break;
     case "6": player.x = Math.min(220, player.x + 10); break;
     case "5":
-      bullets.push({ x: player.x + 8, y: player.y });
-      if (doubleFire) bullets.push({ x: player.x - 8, y: player.y });
+      bullets.push({ x: player.x + player.width / 2 - 1, y: player.y });
+      if (doubleFire) {
+        bullets.push({ x: player.x, y: player.y });
+        bullets.push({ x: player.x + player.width, y: player.y });
+      }
       break;
     case "0":
       paused = true;
