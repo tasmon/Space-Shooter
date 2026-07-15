@@ -2,17 +2,17 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const pauseMenu = document.getElementById("pauseMenu");
 
-// Strict 240x320 screen
 canvas.width = 240;
 canvas.height = 320;
 
-let player, bullets, enemies, powerUps, lives, score;
+let player, bullets, enemies, powerUps, lives, score, level;
 let highScore = 0;
-let gameInterval, difficulty = "easy", doubleFire = false, shield = false;
+let gameInterval, doubleFire = false, shield = false;
 let paused = false;
+let shootTimer = 0;
+let enemiesDestroyed = 0;
 
 function startGame() {
-  difficulty = document.getElementById("difficulty").value;
   document.getElementById("menu").classList.remove("active");
   canvas.style.display = "block";
   resetGame();
@@ -20,30 +20,43 @@ function startGame() {
 }
 
 function resetGame() {
-  player = { x: 100, y: 260, width: 40, height: 40 }; // larger ship
+  player = { x: 100, y: 260, width: 40, height: 40 };
   bullets = [];
   enemies = [];
   powerUps = [];
   lives = 3;
   score = 0;
+  level = 1;
   doubleFire = false;
   shield = false;
   paused = false;
+  shootTimer = 0;
+  enemiesDestroyed = 0;
   pauseMenu.style.display = "none";
 }
 
 function updateGame() {
   if (paused) return;
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Background stars
   ctx.fillStyle = "white";
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 10; i++) {
     ctx.fillRect(Math.random() * 240, Math.random() * 320, 2, 2);
   }
 
-  // Player spaceship
+  // Auto-shoot
+  shootTimer++;
+  if (shootTimer > 10) {
+    bullets.push({ x: player.x + player.width / 2 - 2, y: player.y });
+    if (doubleFire) {
+      bullets.push({ x: player.x + 5, y: player.y });
+      bullets.push({ x: player.x + player.width - 5, y: player.y });
+    }
+    shootTimer = 0;
+  }
+
+  // Player ship
   ctx.fillStyle = shield ? "lime" : "cyan";
   ctx.beginPath();
   ctx.moveTo(player.x + player.width / 2, player.y);
@@ -60,13 +73,13 @@ function updateGame() {
     if (b.y < 0) bullets.splice(i, 1);
   });
 
-  // Enemies
-  if (Math.random() < 0.05) {
-    enemies.push({ x: Math.random() * 200, y: 0, size: 25 });
+  // Enemies spawn rate increases with level
+  if (Math.random() < 0.03 + level * 0.002) {
+    enemies.push({ x: Math.random() * 200, y: 0, size: 15 + level });
   }
   ctx.fillStyle = "red";
   enemies.forEach((e, i) => {
-    e.y += (difficulty === "easy" ? 1 : difficulty === "medium" ? 2 : 3);
+    e.y += 1 + level * 0.2;
     ctx.beginPath();
     ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
     ctx.fill();
@@ -78,6 +91,11 @@ function updateGame() {
         enemies.splice(i, 1);
         bullets.splice(j, 1);
         score += 10;
+        enemiesDestroyed++;
+        if (enemiesDestroyed >= 15 && level < 20) {
+          level++;
+          enemiesDestroyed = 0;
+        }
       }
     });
 
@@ -123,6 +141,7 @@ function updateGame() {
   ctx.fillText("Score: " + score, 10, 20);
   ctx.fillText("Lives: " + lives, 170, 20);
   ctx.fillText("High: " + highScore, 90, 20);
+  ctx.fillText("Level: " + level, 10, 40);
 }
 
 function endGame() {
@@ -131,7 +150,7 @@ function endGame() {
     highScore = score;
     document.getElementById("highscoreValue").innerText = highScore;
   }
-  alert("Game Over! Score: " + score);
+  alert("Game Over! Score: " + score + " | Level: " + level);
   backToMenu();
 }
 
@@ -164,13 +183,6 @@ document.addEventListener("keydown", e => {
     case "8": player.y = Math.min(280, player.y + 10); break;
     case "4": player.x = Math.max(0, player.x - 10); break;
     case "6": player.x = Math.min(200, player.x + 10); break;
-    case "5":
-      bullets.push({ x: player.x + player.width / 2 - 2, y: player.y });
-      if (doubleFire) {
-        bullets.push({ x: player.x + 5, y: player.y });
-        bullets.push({ x: player.x + player.width - 5, y: player.y });
-      }
-      break;
     case "0":
       paused = true;
       pauseMenu.style.display = "block";
