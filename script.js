@@ -17,7 +17,7 @@ function startGame() {
   document.getElementById("menu").classList.remove("active");
   canvas.style.display = "block";
   resetGame();
-  gameInterval = setInterval(updateGame, 60); // slower tick for smoother play
+  gameInterval = setInterval(updateGame, 70); // slower tick for smoother play
 }
 
 function resetGame() {
@@ -25,7 +25,7 @@ function resetGame() {
   bullets = [];
   enemies = [];
   powerUps = [];
-  lives = 3;
+  lives = 5; // start with 5 lives
   score = 0;
   level = 1;
   doubleFire = false;
@@ -43,13 +43,13 @@ function updateGame() {
 
   // Background stars
   ctx.fillStyle = "white";
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 6; i++) {
     ctx.fillRect(Math.random() * 240, Math.random() * 320, 2, 2);
   }
 
   // Auto-shoot
   shootTimer++;
-  if (shootTimer > 12) {
+  if (shootTimer > 15) {
     bullets.push({ x: player.x + player.width / 2 - 2, y: player.y });
     if (doubleFire) {
       bullets.push({ x: player.x + 5, y: player.y });
@@ -70,7 +70,7 @@ function updateGame() {
   // Bullets
   ctx.fillStyle = "yellow";
   bullets.forEach((b, i) => {
-    b.y -= 5; // slower bullet speed
+    b.y -= 4;
     ctx.fillRect(b.x, b.y, 5, 15);
     if (b.y < 0) bullets.splice(i, 1);
   });
@@ -91,26 +91,17 @@ function updateGame() {
         boss.hp--;
         if (boss.hp <= 0) {
           score += 200;
-          lives++; // bonus life for beating boss
+          lives++; // bonus life
           boss = null;
           level++;
         }
       }
     });
-
-    if (boss.x < player.x + player.width && boss.x + boss.width > player.x &&
-        boss.y < player.y + player.height && boss.y + boss.height > player.y) {
-      if (shield) shield = false;
-      else {
-        lives--;
-        if (lives <= 0) endGame();
-      }
-    }
   }
 
   // Regular enemies
-  if (!boss && Math.random() < 0.02 + level * 0.0015) {
-    const colors = ["red", "orange", "blue", "green", "pink", "cyan", "magenta"];
+  if (!boss && Math.random() < 0.02 + level * 0.001) {
+    const colors = ["red", "orange", "blue", "pink", "cyan", "magenta"];
     enemies.push({
       x: Math.random() * 200,
       y: 0,
@@ -119,7 +110,7 @@ function updateGame() {
     });
   }
   enemies.forEach((e, i) => {
-    e.y += 0.8 + level * 0.15; // slower speed for smoother play
+    e.y += 0.8 + level * 0.15;
     ctx.fillStyle = e.color;
     ctx.beginPath();
     ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
@@ -176,11 +167,12 @@ function updateGame() {
   // HUD
   ctx.fillStyle = "white";
   ctx.font = "bold 14px Arial";
-  ctx.fillText("Score: " + score, 10, 20);
-  ctx.fillText("Lives: " + lives, 170, 20);
-  ctx.fillText("High: " + highScore, 90, 20);
-  ctx.fillText("Level: " + level, 10, 40);
-  if (boss) ctx.fillText("Boss HP: " + boss.hp, 120, 40);
+  ctx.textAlign = "center";
+  ctx.fillText("Score: " + score, 120, 20);
+  ctx.fillText("Lives: " + lives, 120, 40);
+  ctx.fillText("High: " + highScore, 120, 60);
+  ctx.fillText("Level: " + level, 120, 80);
+  if (boss) ctx.fillText("Boss HP: " + boss.hp, 120, 100);
 }
 
 function endGame() {
@@ -218,11 +210,16 @@ function quitGame() {
 // Controls with T9 keypad
 document.addEventListener("keydown", e => {
   switch (e.key) {
+    case "1": backToMenu(); break; // always go home
     case "2": player.y = Math.max(0, player.y - 10); break;
     case "8": player.y = Math.min(280, player.y + 10); break;
     case "4": player.x = Math.max(0, player.x - 10); break;
     case "6": player.x = Math.min(200, player.x + 10); break;
-    case "0":
+    case "5": // toggle pause/play
+      paused = !paused;
+      pauseMenu.style.display = paused ? "block" : "none";
+      break;
+    case "0": // open pause menu
       paused = true;
       pauseMenu.style.display = "block";
       break;
